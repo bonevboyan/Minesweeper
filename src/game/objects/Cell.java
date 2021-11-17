@@ -6,7 +6,7 @@ public abstract class Cell {
     protected boolean isFlagged = false;
     protected boolean isOpened = false;
 
-    public Cell(int x, int y) {
+    public Cell(int y, int x) {
         this.x = x;
         this.y = y;
     }
