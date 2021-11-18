@@ -34,7 +34,22 @@ public class ConsoleRenderer implements IRenderer {
     }
 
     @Override
-    public void printOptions() {
+    public void printSelect() {
+        System.out.println("Select x and y of the cell you want to choose: ");
+    }
 
+    @Override
+    public void printOptions() {
+        System.out.println("""
+                Choose 0-2:
+                0. Open cell.
+                1. Flag/unflag cell.
+                2. Back.
+                """);
+    }
+
+    @Override
+    public void printSetup() {
+        System.out.println("How many bombs do you want in the game? ");
     }
 }

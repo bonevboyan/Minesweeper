@@ -8,5 +8,9 @@ public interface IRenderer {
 
     void printField(Field field) throws Exception;
 
+    void printSelect();
+
     void printOptions();
+
+    void printSetup();
 }

@@ -1,10 +1,12 @@
 package game;
 
-import game.objects.ClearCell;
+import game.objects.Field;
+import game.UI.IRenderer;
+
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(new ClearCell(1, 2).getClass().toString());
+        Field field = new Field();
     }
 }
