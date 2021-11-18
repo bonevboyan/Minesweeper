@@ -35,7 +35,7 @@ public class ConsoleRenderer implements IRenderer {
 
     @Override
     public void printSelect() {
-        System.out.println("Select x and y of the cell you want to choose: ");
+        System.out.print("Select x and y of the cell you want to choose: ");
     }
 
     @Override
