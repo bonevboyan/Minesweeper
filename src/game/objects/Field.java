@@ -17,6 +17,14 @@ public class Field {
         return cells;
     }
 
+    public int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public int getWIDTH() {
+        return WIDTH;
+    }
+
     public void initiliazeBoard(int bombCount) {
         cells = new Cell[HEIGHT][WIDTH];
 
@@ -30,7 +38,7 @@ public class Field {
             int randomX = (int) (Math.random() * WIDTH);
             int randomY = (int) (Math.random() * HEIGHT);
 
-            if (cells[randomY][randomX].getClass().toString() == "class game.objects.ClearCell") {
+            if (cells[randomY][randomX].getClass().toString().equals("class game.objects.ClearCell")) {
                 cells[randomY][randomX] = new BombCell(randomY, randomX);
                 i++;
             }
