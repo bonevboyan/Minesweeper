@@ -6,11 +6,11 @@ public class Field {
     private Cell[][] cells;
 
     public Field() {
-        initiliazeBoard(10);
+        initializeBoard(10);
     }
 
     public Field(int bombCount) {
-        initiliazeBoard(bombCount);
+        initializeBoard(bombCount);
     }
 
     public Cell[][] getCells() {
@@ -25,7 +25,7 @@ public class Field {
         return WIDTH;
     }
 
-    public void initiliazeBoard(int bombCount) {
+    public void initializeBoard(int bombCount) {
         cells = new Cell[HEIGHT][WIDTH];
 
         for (int i = 0; i < HEIGHT; i++) {
