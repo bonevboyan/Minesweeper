@@ -52,4 +52,11 @@ public class ConsoleRenderer implements IRenderer {
     public void printSetup() {
         System.out.println("How many bombs do you want in the game? ");
     }
+
+    @Override
+    public void printGameOver(Field field) throws Exception {
+        System.out.println("Game over!");
+        printField(field);
+        System.out.println("Do you want to play again? (y/n) ");
+    }
 }
