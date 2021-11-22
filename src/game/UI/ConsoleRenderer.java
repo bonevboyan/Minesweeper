@@ -25,12 +25,22 @@ public class ConsoleRenderer implements IRenderer {
 
     @Override
     public void printField(Field field) throws Exception {
-        for (int i = 0; i < field.getHEIGHT(); i++) {
-            for (int j = 0; j < field.getWIDTH(); j++) {
-                System.out.printf("%s ", cellFactory(field.getCells()[i][j]));
+        System.out.print("  ");
+        for (int i = -1; i < field.getHEIGHT(); i++) {
+            for (int j = -1; j < field.getWIDTH(); j++) {
+                if (i == -1) {
+                    if (j != -1) {
+                        System.out.printf("%2d ", j);
+                    }
+                } else if (j == -1) {
+                    System.out.print(i + "  ");
+                } else {
+                    System.out.printf("%s  ", cellFactory(field.getCells()[i][j]));
+                }
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     @Override
@@ -40,7 +50,7 @@ public class ConsoleRenderer implements IRenderer {
 
     @Override
     public void printOptions() {
-        System.out.println("""
+        System.out.print("""
                 Choose 0-2:
                 0. Open cell.
                 1. Flag/unflag cell.
