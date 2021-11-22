@@ -1,6 +1,8 @@
 package game.UI;
 
+import game.objects.Coordinate;
+
 public interface IReader {
-    int[] readCoordinates();
+    Coordinate readCoordinates();
     int readOption();
 }

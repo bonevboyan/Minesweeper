@@ -3,13 +3,15 @@ package game.objects;
 public class ClearCell extends Cell {
     private int adjacentBombs;
 
-    public ClearCell() { }
+    public ClearCell() {
+        adjacentBombs = 0;
+    }
 
     public int getAdjacentBombs() {
         return adjacentBombs;
     }
 
-    public void setAdjacentBombs(int adjacentBombs) {
-        this.adjacentBombs = adjacentBombs;
+    public void increaseAdjacentBombsByOne() {
+        this.adjacentBombs++;
     }
 }

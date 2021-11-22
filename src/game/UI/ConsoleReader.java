@@ -1,24 +1,25 @@
 package game.UI;
 
+import game.objects.Coordinate;
+
 import java.util.Scanner;
 
 public class ConsoleReader implements IReader{
-    private Scanner scanner;
+    private final Scanner SCANNER;
 
     public ConsoleReader() {
-        this.scanner = new Scanner(System.in);
+        this.SCANNER = new Scanner(System.in);
     }
 
     @Override
-    public int[] readCoordinates() {
-        int result[] = new int[2];
-        result[0] = scanner.nextInt();
-        result[1] = scanner.nextInt();
-        return result;
+    public Coordinate readCoordinates() {
+        int x = SCANNER.nextInt();
+        int y = SCANNER.nextInt();
+        return new Coordinate(y, x);
     }
 
     @Override
     public int readOption() {
-        return scanner.nextInt();
+        return SCANNER.nextInt();
     }
 }

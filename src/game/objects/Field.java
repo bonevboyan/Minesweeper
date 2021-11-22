@@ -58,6 +58,10 @@ public class Field {
         return closedCells == bombCount;
     }
 
+    public boolean hasEnded() {
+        return hasLost || hasWon();
+    }
+
     public void initializeBoard() {
         cells = new Cell[HEIGHT][WIDTH];
 
@@ -71,14 +75,20 @@ public class Field {
             int randomX = (int) (Math.random() * WIDTH);
             int randomY = (int) (Math.random() * HEIGHT);
 
-            if (cells[randomY][randomX].getClass().toString().equals("class game.objects.ClearCell")) {
+            if (cells[randomY][randomX] instanceof ClearCell) {
                 cells[randomY][randomX] = new BombCell();
                 i++;
+                for (Coordinate coord : adjacents) {
+                    if (isInHeightLimits(randomY + coord.y) && isInWidthLimits(randomX + coord.x)
+                            && (cells[randomY + coord.y][randomX + coord.x] instanceof ClearCell clearCell)) {
+                        clearCell.increaseAdjacentBombsByOne();
+                    }
+                }
             }
         }
     }
 
-    public void play(int y, int x) throws IllegalArgumentException, TypeNotPresentException{
+    public void play(int y, int x) throws IllegalArgumentException, TypeNotPresentException {
         if (!isInHeightLimits(y) || !isInWidthLimits(x)) {
             throw new IllegalArgumentException("Cell non-existent");
         }
