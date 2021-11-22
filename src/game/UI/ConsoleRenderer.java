@@ -69,4 +69,9 @@ public class ConsoleRenderer implements IRenderer {
         printField(field);
         System.out.println("Do you want to play again? (y/n) ");
     }
+
+    @Override
+    public void printException(Exception exception) {
+        System.out.println(exception.getMessage());
+    }
 }

@@ -13,19 +13,23 @@ public class Main {
         IReader reader = new ConsoleReader();
 
         while (!field.hasEnded()) {
-            renderer.printField(field);
+            try{
+                renderer.printField(field);
 
-            renderer.printSelect();
-            Coordinate coord = reader.readCoordinates();
+                renderer.printSelect();
+                Coordinate coord = reader.readCoordinates();
 
-            renderer.printOptions();
-            int option = reader.readOption();
+                renderer.printOptions();
+                int option = reader.readOption();
 
-            switch (option) {
-                case 0 -> field.play(coord.y, coord.x);
-                case 1 -> field.changeFlagCell(coord.y, coord.x);
-                default -> {
+                switch (option) {
+                    case 0 -> field.play(coord.y, coord.x);
+                    case 1 -> field.changeFlagCell(coord.y, coord.x);
+                    default -> {
+                    }
                 }
+            }catch (Exception ex){
+                renderer.printException(ex);
             }
         }
         renderer.printField(field);
