@@ -151,4 +151,8 @@ public class Field {
         return adjFlags;
     }
 
+    public void changeFlagCell(int y, int x) {
+        cells[y][x].isFlagged = !cells[y][x].isFlagged;
+    }
+
 }
