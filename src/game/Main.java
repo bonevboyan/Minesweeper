@@ -13,7 +13,7 @@ public class Main {
         IReader reader = new ConsoleReader();
 
         while (!field.hasEnded()) {
-            try{
+            try {
                 renderer.printField(field);
 
                 renderer.printSelect();
@@ -28,10 +28,15 @@ public class Main {
                     default -> {
                     }
                 }
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 renderer.printException(ex);
             }
         }
-        renderer.printField(field);
+
+        if (field.hasWon()) {
+            renderer.printVictory(field);
+        } else {
+            renderer.printGameOver(field);
+        }
     }
 }

@@ -65,14 +65,14 @@ public class ConsoleRenderer implements IRenderer {
 
     @Override
     public void printGameOver(Field field) throws Exception {
-        System.out.println("That's a bomb! Game over!");
+        System.out.println("That's a bomb! Game over! \n");
         printField(field);
         System.out.println("Do you want to play again? (y/n) ");
     }
 
     @Override
     public void printVictory(Field field) throws Exception {
-        System.out.println("Congratulations, you won!");
+        System.out.println("Congratulations, you won! \n");
         printField(field);
         System.out.println("Do you want to play again? (y/n) ");
     }
