@@ -33,10 +33,6 @@ public class Main {
             }
         }
 
-        if (field.hasWon()) {
-            renderer.printVictory(field);
-        } else {
-            renderer.printGameOver(field);
-        }
+        renderer.printEnd(field);
     }
 }

@@ -14,9 +14,7 @@ public interface IRenderer {
 
     void printSetup();
 
-    void printGameOver(Field field) throws Exception;
-
-    void printVictory(Field field) throws Exception;
+    void printEnd(Field field) throws Exception;
 
     void printException(Exception exception);
 }
