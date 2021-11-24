@@ -22,4 +22,9 @@ public class ConsoleReader implements IReader{
     public int readOption() {
         return SCANNER.nextInt();
     }
+
+    @Override
+    public char readCharOption() {
+        return SCANNER.next().toLowerCase().charAt(0);
+    }
 }

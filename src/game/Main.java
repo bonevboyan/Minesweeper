@@ -8,31 +8,41 @@ import game.UI.*;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Field field = new Field();
         IRenderer renderer = new ConsoleRenderer();
         IReader reader = new ConsoleReader();
+        boolean inSession = true;
 
-        while (!field.hasEnded()) {
-            try {
-                renderer.printField(field);
+        while (inSession) {
+            Field field = new Field();
 
-                renderer.printSelect();
-                Coordinate coord = reader.readCoordinates();
+            while (!field.hasEnded()) {
+                try {
+                    renderer.printField(field);
 
-                renderer.printOptions();
-                int option = reader.readOption();
+                    renderer.printSelect();
+                    Coordinate coord = reader.readCoordinates();
 
-                switch (option) {
-                    case 0 -> field.play(coord.y, coord.x);
-                    case 1 -> field.changeFlagCell(coord.y, coord.x);
-                    default -> {
+                    renderer.printOptions();
+                    int option = reader.readOption();
+
+                    switch (option) {
+                        case 0 -> field.play(coord.y, coord.x);
+                        case 1 -> field.changeFlagCell(coord.y, coord.x);
+                        default -> {
+                        }
                     }
+                } catch (Exception ex) {
+                    renderer.printException(ex);
                 }
-            } catch (Exception ex) {
-                renderer.printException(ex);
+            }
+
+            renderer.printEnd(field);
+            char ans = reader.readCharOption();
+
+            if (ans != 'y') {
+                inSession = false;
             }
         }
 
-        renderer.printEnd(field);
     }
 }
