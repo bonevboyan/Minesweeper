@@ -5,19 +5,24 @@ import game.objects.ClearCell;
 import game.objects.Field;
 
 public class ConsoleRenderer implements IRenderer {
+    private final String CLOSED_CELL = "\u2584";
+    private final String EMPTY_CELL = ".";
+    private final String BOMB_CELL = "\u2297";
+    private final String FLAGGED_CELL = "F";
+
     @Override
     public String cellFactory(Cell cell) throws Exception {
         if (!cell.isOpened()) {
             if (cell.isFlagged()) {
-                return "F";
+                return FLAGGED_CELL;
             } else {
-                return "#";
+                return CLOSED_CELL;
             }
         } else if (cell.getClass().toString().equals("class game.objects.ClearCell")) {
             int number = ((ClearCell) cell).getAdjacentBombs();
-            return number == 0 ? "." : String.valueOf(number);
+            return number == 0 ? EMPTY_CELL : String.valueOf(number);
         } else if (cell.getClass().toString().equals("class game.objects.BombCell")) {
-            return "*";
+            return BOMB_CELL;
         } else {
             throw new Exception("Invalid object. Supposed to be Cell.");
         }

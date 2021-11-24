@@ -102,7 +102,9 @@ public class Field {
 
             for (int h = 0; h < HEIGHT; h++) {
                 for (int w = 0; w < WIDTH; w++) {
-                    cells[h][w].isOpened = true;
+                    if (cells[h][w] instanceof BombCell cell) {
+                        cell.isOpened = true;
+                    }
                 }
             }
 

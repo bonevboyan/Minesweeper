@@ -11,16 +11,24 @@ public class ConsoleReader implements IReader{
         this.SCANNER = new Scanner(System.in);
     }
 
+    private int readInteger() {
+        if (!SCANNER.hasNextInt()) {
+            SCANNER.next();
+            throw new IllegalArgumentException("Invalid input. Expected an integer.");
+        }
+        return SCANNER.nextInt();
+    }
+
     @Override
     public Coordinate readCoordinates() {
-        int x = SCANNER.nextInt();
-        int y = SCANNER.nextInt();
+        int x = readInteger();
+        int y = readInteger();
         return new Coordinate(y, x);
     }
 
     @Override
     public int readOption() {
-        return SCANNER.nextInt();
+        return readInteger();
     }
 
     @Override
