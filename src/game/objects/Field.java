@@ -79,7 +79,7 @@ public class Field {
                 cells[randomY][randomX] = new BombCell();
                 i++;
                 for (Coordinate coord : adjacents) {
-                    if (isInHeightLimits(randomY + coord.y) && isInWidthLimits(randomX + coord.x)
+                    if (isInBorderLimits(randomY + coord.y, randomX + coord.x)
                             && (cells[randomY + coord.y][randomX + coord.x] instanceof ClearCell clearCell)) {
                         clearCell.increaseAdjacentBombsByOne();
                     }
@@ -132,12 +132,34 @@ public class Field {
 
     private void openAllAdj(int y, int x) {
         for (Coordinate coord : adjacents) {
-            if (isInHeightLimits(y + coord.y) && isInWidthLimits(x + coord.x)
+            if (isInBorderLimits(y + coord.y, x + coord.x)
                     && !cells[y + coord.y][x + coord.x].isFlagged
                     && !cells[y + coord.y][x + coord.x].isOpened) {
                 play(y + coord.y, x + coord.x);
             }
         }
+    }
+
+    private int getAdjacentFlagsCount(int y, int x) {
+        int adjFlags = 0;
+
+        for (Coordinate coord : adjacents) {
+            if (isInBorderLimits(y + coord.y, x + coord.x)
+                    && cells[y + coord.y][x + coord.x].isFlagged) {
+                adjFlags++;
+            }
+        }
+
+        return adjFlags;
+    }
+
+    public void changeFlagCell(int y, int x) throws IllegalArgumentException {
+
+        if (!isInBorderLimits(y, x)) {
+            throw new IllegalArgumentException("Cell non-existent");
+        }
+
+        cells[y][x].isFlagged = !cells[y][x].isFlagged;
     }
 
     private boolean isInHeightLimits(int height) {
@@ -148,21 +170,8 @@ public class Field {
         return width < WIDTH && width >= 0;
     }
 
-    private int getAdjacentFlagsCount(int y, int x) {
-        int adjFlags = 0;
-
-        for (Coordinate coord : adjacents) {
-            if (isInHeightLimits(y + coord.y) && isInWidthLimits(x + coord.x)
-                    && cells[y + coord.y][x + coord.x].isFlagged) {
-                adjFlags++;
-            }
-        }
-
-        return adjFlags;
-    }
-
-    public void changeFlagCell(int y, int x) {
-        cells[y][x].isFlagged = !cells[y][x].isFlagged;
+    private boolean isInBorderLimits(int height, int width) {
+        return isInHeightLimits(height) && isInWidthLimits(width);
     }
 
 }
