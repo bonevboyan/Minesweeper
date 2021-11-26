@@ -5,6 +5,7 @@ public class Field {
     private final int WIDTH = 15;
     private final int MIN_BOMB_COUNT = 1;
     private final int MAX_BOMB_COUNT = HEIGHT * WIDTH;
+    private final Timer timer = new Timer();
 
     private final Coordinate[] adjacents = {
             new Coordinate(1, 0), new Coordinate(1, 1), new Coordinate(0, 1),
@@ -18,12 +19,16 @@ public class Field {
     private int closedCells = HEIGHT * WIDTH;
 
     public Field() {
-        initializeBoard();
+    	
+        this(10);
     }
 
     public Field(int bombCount) {
-        this.setBombCount(bombCount);
+    	this.setBombCount(bombCount);
+    	timer.startTimer();
         initializeBoard();
+        
+        
     }
 
     public Cell[][] getCells() {
@@ -50,6 +55,10 @@ public class Field {
         }
     }
 
+    public long getTime() { 
+    	return timer.getElapsedSeconds();
+    }
+    
     public boolean hasLost() {
         return hasLost;
     }
@@ -63,6 +72,7 @@ public class Field {
     }
 
     public void initializeBoard() {
+    
         cells = new Cell[HEIGHT][WIDTH];
 
         for (int i = 0; i < HEIGHT; i++) {
@@ -99,7 +109,7 @@ public class Field {
 
         if (cells[y][x] instanceof BombCell) {
             hasLost = true;
-
+            timer.stopTimer();
             for (int h = 0; h < HEIGHT; h++) {
                 for (int w = 0; w < WIDTH; w++) {
                     if (cells[h][w] instanceof BombCell cell) {
@@ -118,7 +128,9 @@ public class Field {
         if (!currCell.isOpened) {
             currCell.isOpened = true;
             closedCells--;
-
+            if(hasWon()) {
+            	timer.stopTimer();
+            }
             if (currCell.getAdjacentBombs() == 0) {
                 openAllAdj(y, x);
             }

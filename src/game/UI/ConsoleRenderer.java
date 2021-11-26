@@ -70,12 +70,16 @@ public class ConsoleRenderer implements IRenderer {
 
     @Override
     public void printEnd(Field field) throws Exception {
-        String endText = field.hasWon() ? "Congratulations, you won! \n" : "That's a bomb! Game over! \n";
+        String endText = field.hasWon() ? "Congratulations, you won! \n": "That's a bomb! Game over! \n";
+        
         System.out.println(endText);
+        System.out.println("Time wasted: " + formatTime(field.getTime()));
         printField(field);
         System.out.println("Do you want to play again? (y/n) ");
     }
-
+    private String formatTime(long seconds) {
+    	return String.format("%02d:%02d", seconds/60, seconds%60);
+    }
     @Override
     public void printException(Exception exception) {
         System.out.println(exception.getMessage());
