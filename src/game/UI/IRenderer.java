@@ -6,15 +6,15 @@ import game.objects.Field;
 public interface IRenderer {
     String cellFactory(Cell cell) throws Exception;
 
-    void printField(Field field) throws Exception;
+    void displayField(Field field) throws Exception;
 
-    void printSelect();
+    void displaySelect();
 
-    void printOptions();
+    void displayOptions();
 
-    void printSetup();
+    void displaySetup();
 
-    void printEnd(Field field) throws Exception;
+    void displayEnd(Field field, int wins, int losses) throws Exception;
 
-    void printException(Exception exception);
+    void displayException(Exception exception);
 }

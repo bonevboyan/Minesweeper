@@ -24,12 +24,12 @@ public class ConsoleRenderer implements IRenderer {
         } else if (cell.getClass().toString().equals("class game.objects.BombCell")) {
             return BOMB_CELL;
         } else {
-            throw new Exception("Invalid object. Supposed to be Cell.");
+            throw new TypeNotPresentException("Invalid object. Supposed to be Cell.", new Throwable());
         }
     }
 
     @Override
-    public void printField(Field field) throws Exception {
+    public void displayField(Field field) throws Exception {
         System.out.print("  ");
         for (int i = -1; i < field.getHEIGHT(); i++) {
             for (int j = -1; j < field.getWIDTH(); j++) {
@@ -49,12 +49,12 @@ public class ConsoleRenderer implements IRenderer {
     }
 
     @Override
-    public void printSelect() {
+    public void displaySelect() {
         System.out.print("Select x and y of the cell you want to choose: ");
     }
 
     @Override
-    public void printOptions() {
+    public void displayOptions() {
         System.out.print("""
                 Choose 0-2:
                 0. Open cell.
@@ -64,24 +64,29 @@ public class ConsoleRenderer implements IRenderer {
     }
 
     @Override
-    public void printSetup() {
+    public void displaySetup() {
         System.out.println("How many bombs do you want in the game? ");
     }
 
     @Override
-    public void printEnd(Field field) throws Exception {
+    public void displayEnd(Field field, int wins, int losses) throws Exception {
+        displayField(field);
+
         String endText = field.hasWon() ? "Congratulations, you won! \n": "That's a bomb! Game over! \n";
-        
+
         System.out.println(endText);
         System.out.println("Time wasted: " + formatTime(field.getTime()));
-        printField(field);
+        System.out.printf("W/L Ratio: %d:%d\n\n", wins, losses);
+
         System.out.println("Do you want to play again? (y/n) ");
     }
+
     private String formatTime(long seconds) {
     	return String.format("%02d:%02d", seconds/60, seconds%60);
     }
+
     @Override
-    public void printException(Exception exception) {
+    public void displayException(Exception exception) {
         System.out.println(exception.getMessage());
     }
 }

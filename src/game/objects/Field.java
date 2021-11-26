@@ -27,8 +27,6 @@ public class Field {
     	this.setBombCount(bombCount);
     	timer.startTimer();
         initializeBoard();
-        
-        
     }
 
     public Cell[][] getCells() {
