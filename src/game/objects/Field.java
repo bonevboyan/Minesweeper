@@ -1,11 +1,9 @@
 package game.objects;
 
 public class Field {
-    private final int HEIGHT = 10;
-    private final int WIDTH = 15;
-    private final int MIN_BOMB_COUNT = 1;
-    private final int MAX_BOMB_COUNT = HEIGHT * WIDTH;
-    private final Timer timer = new Timer();
+    private int height;
+    private int width;
+    private final Timer TIMER = new Timer();
 
     private final Coordinate[] adjacents = {
             new Coordinate(1, 0), new Coordinate(1, 1), new Coordinate(0, 1),
@@ -14,18 +12,30 @@ public class Field {
     };
 
     private Cell[][] cells;
-    private int bombCount = 10;
+    private int bombCount;
     private boolean hasLost = false;
-    private int closedCells = HEIGHT * WIDTH;
+    private int closedCells = height * width;
 
     public Field() {
-    	
-        this(10);
+        this(1);
     }
 
-    public Field(int bombCount) {
-    	this.setBombCount(bombCount);
-    	timer.startTimer();
+    public Field(int difficulty) {
+
+        MinesweeperDifficulty minesweeperDifficulty = Difficulties.none;
+
+        switch (difficulty) {
+            case 0 -> minesweeperDifficulty = Difficulties.easy;
+            case 1 -> minesweeperDifficulty = Difficulties.medium;
+            case 2 -> minesweeperDifficulty = Difficulties.expert;
+            default -> { }
+        }
+
+        this.height = minesweeperDifficulty.height;
+        this.width = minesweeperDifficulty.width;
+        this.bombCount = minesweeperDifficulty.bombCount;
+
+        TIMER.startTimer();
         initializeBoard();
     }
 
@@ -33,28 +43,16 @@ public class Field {
         return cells;
     }
 
-    public int getHEIGHT() {
-        return HEIGHT;
+    public int getHeight() {
+        return height;
     }
 
-    public int getWIDTH() {
-        return WIDTH;
-    }
-
-    public int getBombCount() {
-        return bombCount;
-    }
-
-    public void setBombCount(int bombCount) {
-        if (MIN_BOMB_COUNT < bombCount && bombCount < MAX_BOMB_COUNT) {
-            this.bombCount = bombCount;
-        } else {
-            this.bombCount = 10;
-        }
+    public int getWidth() {
+        return width;
     }
 
     public long getTime() { 
-    	return timer.getElapsedSeconds();
+    	return TIMER.getElapsedSeconds();
     }
     
     public boolean hasLost() {
@@ -71,17 +69,17 @@ public class Field {
 
     public void initializeBoard() {
     
-        cells = new Cell[HEIGHT][WIDTH];
+        cells = new Cell[height][width];
 
-        for (int i = 0; i < HEIGHT; i++) {
-            for (int j = 0; j < WIDTH; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 cells[i][j] = new ClearCell();
             }
         }
 
         for (int i = 0; i < bombCount; ) {
-            int randomX = (int) (Math.random() * WIDTH);
-            int randomY = (int) (Math.random() * HEIGHT);
+            int randomX = (int) (Math.random() * width);
+            int randomY = (int) (Math.random() * height);
 
             if (cells[randomY][randomX] instanceof ClearCell) {
                 cells[randomY][randomX] = new BombCell();
@@ -107,9 +105,9 @@ public class Field {
 
         if (cells[y][x] instanceof BombCell) {
             hasLost = true;
-            timer.stopTimer();
-            for (int h = 0; h < HEIGHT; h++) {
-                for (int w = 0; w < WIDTH; w++) {
+            TIMER.stopTimer();
+            for (int h = 0; h < height; h++) {
+                for (int w = 0; w < width; w++) {
                     if (cells[h][w] instanceof BombCell cell) {
                         cell.isOpened = true;
                     }
@@ -127,7 +125,7 @@ public class Field {
             currCell.isOpened = true;
             closedCells--;
             if(hasWon()) {
-            	timer.stopTimer();
+            	TIMER.stopTimer();
             }
             if (currCell.getAdjacentBombs() == 0) {
                 openAllAdj(y, x);
@@ -175,11 +173,11 @@ public class Field {
     }
 
     private boolean isInHeightLimits(int height) {
-        return height < HEIGHT && height >= 0;
+        return height < this.height && height >= 0;
     }
 
     private boolean isInWidthLimits(int width) {
-        return width < WIDTH && width >= 0;
+        return width < this.width && width >= 0;
     }
 
     private boolean isInBorderLimits(int height, int width) {

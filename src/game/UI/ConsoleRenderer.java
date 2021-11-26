@@ -11,7 +11,7 @@ public class ConsoleRenderer implements IRenderer {
     private final String FLAGGED_CELL = "F";
 
     @Override
-    public String cellFactory(Cell cell) throws Exception {
+    public String cellFactory(Cell cell){
         if (!cell.isOpened()) {
             if (cell.isFlagged()) {
                 return FLAGGED_CELL;
@@ -29,16 +29,16 @@ public class ConsoleRenderer implements IRenderer {
     }
 
     @Override
-    public void displayField(Field field) throws Exception {
-        System.out.print("  ");
-        for (int i = -1; i < field.getHEIGHT(); i++) {
-            for (int j = -1; j < field.getWIDTH(); j++) {
+    public void displayField(Field field){
+        System.out.print("   ");
+        for (int i = -1; i < field.getHeight(); i++) {
+            for (int j = -1; j < field.getWidth(); j++) {
                 if (i == -1) {
                     if (j != -1) {
                         System.out.printf("%2d ", j);
                     }
                 } else if (j == -1) {
-                    System.out.print(i + "  ");
+                    System.out.printf("%2d  ", i);
                 } else {
                     System.out.printf("%s  ", cellFactory(field.getCells()[i][j]));
                 }
@@ -69,7 +69,7 @@ public class ConsoleRenderer implements IRenderer {
     }
 
     @Override
-    public void displayEnd(Field field, int wins, int losses) throws Exception {
+    public void displayEnd(Field field, int wins, int losses) {
         displayField(field);
 
         String endText = field.hasWon() ? "Congratulations, you won! \n": "That's a bomb! Game over! \n";
