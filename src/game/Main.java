@@ -1,9 +1,6 @@
 package game;
 
 import game.core.Controller;
-import game.objects.Coordinate;
-import game.objects.Field;
-import game.UI.*;
 
 
 public class Main {

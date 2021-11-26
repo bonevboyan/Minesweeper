@@ -2,6 +2,7 @@ package game.UI;
 
 import game.objects.Cell;
 import game.objects.ClearCell;
+import game.objects.Difficulties;
 import game.objects.Field;
 
 public class ConsoleRenderer implements IRenderer {
@@ -65,7 +66,13 @@ public class ConsoleRenderer implements IRenderer {
 
     @Override
     public void displaySetup() {
-        System.out.println("How many bombs do you want in the game? ");
+        System.out.println("Choose difficulty: ");
+        System.out.printf("0. Easy (%dx%d, %d bombs)\n", Difficulties.easy.width,
+                Difficulties.easy.height, Difficulties.easy.bombCount);
+        System.out.printf("1. Medium (%dx%d, %d bombs)\n", Difficulties.medium.width,
+                Difficulties.medium.height, Difficulties.medium.bombCount);
+        System.out.printf("2. Expert (%dx%d, %d bombs)\n", Difficulties.expert.width,
+                Difficulties.expert.height, Difficulties.expert.bombCount);
     }
 
     @Override

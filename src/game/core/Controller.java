@@ -1,9 +1,6 @@
 package game.core;
 
-import game.UI.ConsoleReader;
-import game.UI.ConsoleRenderer;
-import game.UI.IReader;
-import game.UI.IRenderer;
+import game.UI.*;
 import game.objects.Coordinate;
 import game.objects.Field;
 
@@ -26,7 +23,10 @@ public class Controller {
         boolean inSession = true;
 
         while (inSession) {
-            Field field = new Field();
+            renderer.displaySetup();
+            int difficulty = reader.readOption();
+
+            Field field = new Field(difficulty);
 
             while (!field.hasEnded()) {
                 try {
