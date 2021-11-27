@@ -14,7 +14,7 @@ public class Field {
     private Cell[][] cells;
     private int bombCount;
     private boolean hasLost = false;
-    private int closedCells = height * width;
+    private int closedCells;
 
     public Field() {
         this(1);
@@ -33,6 +33,7 @@ public class Field {
 
         this.height = minesweeperDifficulty.height;
         this.width = minesweeperDifficulty.width;
+        this.closedCells = this.height * this.width;
         this.bombCount = minesweeperDifficulty.bombCount;
 
         TIMER.startTimer();

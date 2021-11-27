@@ -1,9 +1,12 @@
 package game.UI;
 
+import game.data.User;
 import game.objects.Cell;
 import game.objects.ClearCell;
 import game.objects.Difficulties;
 import game.objects.Field;
+
+import java.util.List;
 
 public class ConsoleRenderer implements IRenderer {
     private final String CLOSED_CELL = "\u2584";
@@ -12,7 +15,7 @@ public class ConsoleRenderer implements IRenderer {
     private final String FLAGGED_CELL = "F";
 
     @Override
-    public String cellFactory(Cell cell){
+    public String cellFactory(Cell cell) {
         if (!cell.isOpened()) {
             if (cell.isFlagged()) {
                 return FLAGGED_CELL;
@@ -30,7 +33,7 @@ public class ConsoleRenderer implements IRenderer {
     }
 
     @Override
-    public void displayField(Field field){
+    public void displayField(Field field) {
         System.out.print("   ");
         for (int i = -1; i < field.getHeight(); i++) {
             for (int j = -1; j < field.getWidth(); j++) {
@@ -76,24 +79,62 @@ public class ConsoleRenderer implements IRenderer {
     }
 
     @Override
-    public void displayEnd(Field field, int wins, int losses) {
+    public void displayEnd(Field field, int wins, int losses, long time) {
         displayField(field);
 
-        String endText = field.hasWon() ? "Congratulations, you won! \n": "That's a bomb! Game over! \n";
+        String endText = field.hasWon() ? "Congratulations, you won! \n" : "That's a bomb! Game over! \n";
 
         System.out.println(endText);
-        System.out.println("Time wasted: " + formatTime(field.getTime()));
+        System.out.println("Time wasted: " + formatTime(time));
         System.out.printf("W/L Ratio: %d:%d\n\n", wins, losses);
 
         System.out.println("Do you want to play again? (y/n) ");
     }
 
     private String formatTime(long seconds) {
-    	return String.format("%02d:%02d", seconds/60, seconds%60);
+        return String.format("%02d:%02d", seconds / 60, seconds % 60);
     }
 
     @Override
     public void displayException(Exception exception) {
         System.out.println(exception.getMessage());
+    }
+
+    @Override
+    public void displayLeaderboard(List<User> users) {
+        System.out.println("All scores:");
+        displayUsers(users);
+    }
+
+    @Override
+    public void displayPersonalScores(List<User> users) {
+        System.out.println("Personal scores:");
+        displayUsers(users);
+    }
+
+    @Override
+    public void displayUsernameChoice() {
+        System.out.print("Enter your username: ");
+    }
+
+    @Override
+    public void displayScoresOptions() {
+        System.out.print("""
+                Choose 0-2:
+                0. Display leaderboard
+                1. Display personal scores
+                2. Exit
+                """);
+    }
+
+    private void displayUsers(List<User> users) {
+        if (users.size() != 0) {
+            for (User user : users) {
+                System.out.printf("%s: %s\n", user.user, formatTime(user.time));
+            }
+        } else {
+            System.out.println("No available records.");
+        }
+        System.out.println();
     }
 }

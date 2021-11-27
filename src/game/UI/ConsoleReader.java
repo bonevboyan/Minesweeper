@@ -35,4 +35,9 @@ public class ConsoleReader implements IReader{
     public char readCharOption() {
         return SCANNER.next().toLowerCase().charAt(0);
     }
+
+    @Override
+    public String readUsername() {
+        return SCANNER.next();
+    }
 }
