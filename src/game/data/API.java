@@ -58,7 +58,6 @@ public class API {
             while ((responseLine = br.readLine()) != null) {
                 response.append(responseLine.trim());
             }
-            System.out.println(response.toString());
         }
     }
 }
