@@ -72,7 +72,7 @@ public class Controller {
 
             if (field.hasWon()) {
                 wins++;
-                data.postRecord(username, time);
+                data.postRecord(username, time, 0);
             } else {
                 losses++;
             }
@@ -88,24 +88,26 @@ public class Controller {
     }
 
     private void showLeaderboards() throws Exception {
-        boolean inSession = true;
-
-        while(inSession){
+        while (true) {
             try {
                 renderer.displayScoresOptions();
                 int option = reader.readOption();
 
+                if (option == 2) {
+                    break;
+                }
+
+                renderer.displaySetup();
+                int difficulty = reader.readOption();
+
                 switch (option) {
-                    case 0 -> renderer.displayLeaderboard(data.getAllRecords());
-                    case 1 -> renderer.displayPersonalScores(data.getOwnRecords(username));
-                    case 2 -> {
-                        inSession = false;
-                    }
+                    case 0 -> renderer.displayLeaderboard(data.getAllRecords(difficulty));
+                    case 1 -> renderer.displayPersonalScores(data.getOwnRecords(username, difficulty));
                     default -> {
                         throw new IllegalArgumentException("Invalid option. Select between 0 and 2.");
                     }
                 }
-            } catch(IllegalArgumentException ex){
+            } catch (IllegalArgumentException ex) {
                 renderer.displayException(ex);
             }
         }

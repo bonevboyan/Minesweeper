@@ -6,21 +6,28 @@ import java.util.List;
 
 public class Data {
     private final API api;
+    private final String[] endpoints;
+    private List<User> users;
 
     public Data() {
         api = new API();
+        endpoints = new String[]{
+                "easy.json",
+                "medium.json",
+                "expert.json"
+        };
     }
 
-    public List<User> getAllRecords() throws Exception {
-        String data = api.sendGET();
+    public List<User> getAllRecords(int difficulty) throws Exception {
+        String data = api.sendGET(endpoints[difficulty]);
 
         List <User> users = parseJSONtoUsers(data);
 
         return orderUsersDescending(users);
     }
 
-    public List<User> getOwnRecords(String user) throws Exception {
-        String data = api.sendGET();
+    public List<User> getOwnRecords(String user, int difficulty) throws Exception {
+        String data = api.sendGET(endpoints[difficulty]);
 
         List <User> users = parseJSONtoUsers(data);
         users = users.stream().filter(u -> user.equals(u.user)).toList();
@@ -28,11 +35,11 @@ public class Data {
         return orderUsersDescending(users);
     }
 
-    public void postRecord(String name, long seconds) throws IOException {
+    public void postRecord(String name, long seconds, int difficulty) throws IOException {
         User user = new User(name, seconds);
         String parsedUser = parseUserToJSON(user);
 
-        api.sendPOST(parsedUser);
+        api.sendPOST(endpoints[difficulty], parsedUser);
     }
 
     private List<User> parseJSONtoUsers(String json){

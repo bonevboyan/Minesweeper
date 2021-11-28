@@ -8,15 +8,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class API {
-    private final String endpoint;
+    private final String url;
 
     public API() {
-        this.endpoint = "https://minesweeper-6eba3-default-rtdb.europe-west1.firebasedatabase.app/record.json";
+        this.url = "https://minesweeper-6eba3-default-rtdb.europe-west1.firebasedatabase.app/record/";
     }
 
-    public String sendGET() throws Exception {
-        URL url = new URL(endpoint);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+    public String sendGET(String endpoint) throws Exception {
+        URL obj = new URL(url + endpoint);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
 
         int responseCode = con.getResponseCode();
@@ -37,9 +37,8 @@ public class API {
         }
     }
 
-    public void sendPOST(String data) throws IOException {
-        //String jsonInputString = "{\"time\": \"432\", \"user\": \"Gamer\"}";
-        URL obj = new URL(endpoint);
+    public void sendPOST(String endpoint, String data) throws IOException {
+        URL obj = new URL(url + endpoint);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json; utf-8");
