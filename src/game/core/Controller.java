@@ -72,7 +72,7 @@ public class Controller {
 
             if (field.hasWon()) {
                 wins++;
-                data.postRecord(username, time, 0);
+                data.postRecord(username, time, difficulty);
             } else {
                 losses++;
             }
