@@ -1,10 +1,7 @@
 package game.UI;
 
 import game.data.User;
-import game.objects.Cell;
-import game.objects.ClearCell;
-import game.objects.Difficulties;
-import game.objects.Field;
+import game.objects.*;
 
 import java.util.List;
 
@@ -22,10 +19,10 @@ public class ConsoleRenderer implements IRenderer {
             } else {
                 return CLOSED_CELL;
             }
-        } else if (cell.getClass().toString().equals("class game.objects.ClearCell")) {
+        } else if (cell instanceof ClearCell) {
             int number = ((ClearCell) cell).getAdjacentBombs();
             return number == 0 ? EMPTY_CELL : String.valueOf(number);
-        } else if (cell.getClass().toString().equals("class game.objects.BombCell")) {
+        } else if (cell instanceof BombCell) {
             return BOMB_CELL;
         } else {
             throw new TypeNotPresentException("Invalid object. Supposed to be Cell.", new Throwable());
