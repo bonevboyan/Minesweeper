@@ -164,13 +164,13 @@ public class Field {
         return adjFlags;
     }
 
-    public void changeFlagCell(int y, int x) throws IllegalArgumentException {
+    public void changeFlagCell(int y, int x) throws Exception {
 
         if (!isInBorderLimits(y, x)) {
             throw new IllegalArgumentException("Cell non-existent");
         }
 
-        cells[y][x].isFlagged = !cells[y][x].isFlagged;
+        cells[y][x].setFlagged(!cells[y][x].isFlagged);
     }
 
     private boolean isInHeightLimits(int height) {
