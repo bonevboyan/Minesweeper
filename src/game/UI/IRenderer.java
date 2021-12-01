@@ -1,6 +1,6 @@
 package game.UI;
 
-import game.data.User;
+import game.data.Record;
 import game.objects.Cell;
 import game.objects.Field;
 
@@ -21,9 +21,9 @@ public interface IRenderer {
 
     void displayException(Exception exception);
 
-    void displayLeaderboard(List<User> users);
+    void displayLeaderboard(List<Record> records);
 
-    void displayPersonalScores(List<User> users);
+    void displayPersonalScores(List<Record> records);
 
     void displayUsernameChoice();
 

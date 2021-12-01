@@ -1,16 +1,16 @@
 package game.data;
 
-public class User implements Comparable<User>{
+public class Record implements Comparable<Record>{
     public String user;
     public long time;
 
-    public User(String user, long time) {
+    public Record(String user, long time) {
         this.user = user;
         this.time = time;
     }
 
     @Override
-    public int compareTo(User u) {
+    public int compareTo(Record u) {
         if(u.time > this.time){
             return -1;
         }

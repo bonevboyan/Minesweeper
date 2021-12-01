@@ -7,7 +7,7 @@ import java.util.List;
 public class Data {
     private final API api;
     private final String[] endpoints;
-    private List<User> users;
+    private List<Record> records;
 
     public Data() {
         api = new API();
@@ -18,45 +18,45 @@ public class Data {
         };
     }
 
-    public List<User> getAllRecords(int difficulty) throws Exception {
+    public List<Record> getAllRecords(int difficulty) throws Exception {
         String data = api.sendGET(endpoints[difficulty]);
 
-        List <User> users = parseJSONtoUsers(data);
+        List <Record> records = parseJSONtoUsers(data);
 
-        return orderUsersDescending(users);
+        return orderUsersDescending(records);
     }
 
-    public List<User> getOwnRecords(String user, int difficulty) throws Exception {
+    public List<Record> getOwnRecords(String user, int difficulty) throws Exception {
         String data = api.sendGET(endpoints[difficulty]);
 
-        List <User> users = parseJSONtoUsers(data);
-        users = users.stream().filter(u -> user.equals(u.user)).toList();
+        List <Record> records = parseJSONtoUsers(data);
+        records = records.stream().filter(u -> user.equals(u.user)).toList();
 
-        return orderUsersDescending(users);
+        return orderUsersDescending(records);
     }
 
     public void postRecord(String name, long seconds, int difficulty) throws IOException {
-        User user = new User(name, seconds);
-        String parsedUser = parseUserToJSON(user);
+        Record record = new Record(name, seconds);
+        String parsedUser = parseUserToJSON(record);
 
         api.sendPOST(endpoints[difficulty], parsedUser);
     }
 
-    private List<User> parseJSONtoUsers(String json){
+    private List<Record> parseJSONtoUsers(String json){
         return Arrays.stream(json.split("},")).map(x -> {
             x = x.replaceAll("[{}\"]", "").replaceAll(",", ":");
             List<String> fields = Arrays.stream(x.split(":")).toList();
-            return new User(fields.get(4), Integer.parseInt(fields.get(2)));
+            return new Record(fields.get(4), Integer.parseInt(fields.get(2)));
         }).toList();
     }
 
-    private String parseUserToJSON(User user){
-        return String.format("{\"time\": \"%d\", \"user\": \"%s\"}", user.time, user.user);
+    private String parseUserToJSON(Record record){
+        return String.format("{\"time\": \"%d\", \"user\": \"%s\"}", record.time, record.user);
     }
 
-    private List<User> orderUsersDescending(List<User> users){
-        User[] usersArr = new User[users.size()];
-        usersArr = users.toArray(usersArr);
+    private List<Record> orderUsersDescending(List<Record> records){
+        Record[] usersArr = new Record[records.size()];
+        usersArr = records.toArray(usersArr);
         Arrays.sort(usersArr);
 
         return Arrays.stream(usersArr).toList();

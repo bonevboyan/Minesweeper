@@ -1,6 +1,6 @@
 package game.UI;
 
-import game.data.User;
+import game.data.Record;
 import game.objects.*;
 
 import java.util.List;
@@ -98,15 +98,15 @@ public class ConsoleRenderer implements IRenderer {
     }
 
     @Override
-    public void displayLeaderboard(List<User> users) {
+    public void displayLeaderboard(List<Record> records) {
         System.out.println("All scores:");
-        displayUsers(users);
+        displayUsers(records);
     }
 
     @Override
-    public void displayPersonalScores(List<User> users) {
+    public void displayPersonalScores(List<Record> records) {
         System.out.println("Personal scores:");
-        displayUsers(users);
+        displayUsers(records);
     }
 
     @Override
@@ -124,10 +124,10 @@ public class ConsoleRenderer implements IRenderer {
                 """);
     }
 
-    private void displayUsers(List<User> users) {
-        if (users.size() != 0) {
-            for (User user : users) {
-                System.out.printf("%s: %s\n", user.user, formatTime(user.time));
+    private void displayUsers(List<Record> records) {
+        if (records.size() != 0) {
+            for (Record record : records) {
+                System.out.printf("%s: %s\n", record.user, formatTime(record.time));
             }
         } else {
             System.out.println("No available records.");
